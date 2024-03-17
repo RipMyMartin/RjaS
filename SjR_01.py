@@ -39,10 +39,9 @@ while True:
         kasutajanimi = input("Sisestage kasutajanimi: ")
         vanaParool = input("Sisestage vana parool: ")
         uusParool = input("Sisestage uus parool: ")
-        muudaParool(kasutajanimi, vanaParool, uusParool, users, passwords)
+        muudaParool(kasutajanimi, vanaParool, uusParool)
 
     elif valik == "3":
         kasutajanimi = input("Sisestage kasutajanimi, для которale soovite parooli taastada: ")
         uusParool = input("Sisestage uus parool: ")
         unustatudParool(kasutajanimi, uusParool, logPas)
-        uuendaAutoriseerimineFail(kasutajanimi, uusParool)

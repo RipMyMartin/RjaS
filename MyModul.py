@@ -31,17 +31,21 @@ def salasona(pikkus: int):
     return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(pikkus))
 
 
-def muudaParool(kasutajanimi, vanaParool, uusParool, kasutajad, paroolid):
-    """Funktsioon kasutaja parooli muutmiseks."""
-    if kasutajanimi in kasutajad:
-        index = kasutajad.index(kasutajanimi)
-        if paroolid[index] == vanaParool:
-            paroolid[index] = uusParool
-            print("Parool on edukalt muudetud.")
-        else:
-            print("Vale vana parool.")
-    else:
-        print("Kasutajanime ei eksisteeri.")
+def muudaParool(kasutajanimi, vanaParool, uusParool):
+    """Функция для изменения пароля пользователя в файле авторизации."""
+    with open("autoriseerimine.txt", "r", encoding="utf-8") as f:
+        read_lines = f.readlines()
+
+    with open("autoriseerimine.txt", "w", encoding="utf-8") as f:
+        for line in read_lines:
+            user, password = line.strip().split(":")
+            if user == kasutajanimi:
+                f.write(f"{user}:{uusParool}\n")  # Перезаписываем пароль для указанного пользователя
+            else:
+                f.write(line)
+
+    print("Parool on edukalt muudetud.")
+
 
 
 def kirjutaFailisse(fail: str, jarjend):
