@@ -15,7 +15,6 @@ while True:
     valik: str = input("Sisestage valiku number: ")
 
     if valik == "4":
-        kirjutaFailisse("autoriseerimine.txt", [f"{users[i]}:{passwords[i]}" for i in range(len(users))])
         break
 
     if valik == "0":
