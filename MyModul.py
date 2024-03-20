@@ -3,17 +3,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import string
-import os
 
 
 def registreeriKasutaja(kasutajanimi, parool, kasutajad, paroolid):
-    """Функция для регистрации пользователя."""
-    global kasutaja_registreeritud
+    """Funktsioon kasutaja registreerimiseks."""
     kasutajad.append(kasutajanimi)
     paroolid.append(parool)
-    kasutaja_registreeritud = True
-    print("Kasutaja on edukalt registreeritud.")
 
+    # Uue kasutaja kirjutamine faili
+    with open("autoriseerimine.txt", "a", encoding="utf-8") as f:
+        f.write(f"{kasutajanimi}:{parool}\n")
+
+    print("Kasutaja on edukalt registreeritud.")
 
 
 def LoePasJaLog(fail: str) -> any:
@@ -32,19 +33,21 @@ def salasona(pikkus: int):
 
 
 def muudaParool(kasutajanimi, vanaParool, uusParool):
-    """Функция для изменения пароля пользователя в файле авторизации."""
+    """Funktsioon kasutaja parooli muutmiseks autoriseerimisfailis."""""
+    # Kõigepealt loeme vanu andmeid
     with open("autoriseerimine.txt", "r", encoding="utf-8") as f:
-        read_lines = f.readlines()
+        lines = f.readlines()
 
     with open("autoriseerimine.txt", "w", encoding="utf-8") as f:
-        for line in read_lines:
+        for line in lines:
             user, password = line.strip().split(":")
             if user == kasutajanimi:
-                f.write(f"{user}:{uusParool}\n")  # Перезаписываем пароль для указанного пользователя
+                f.write(f"{kasutajanimi}:{uusParool}\n")
             else:
                 f.write(line)
 
     print("Parool on edukalt muudetud.")
+
 
 
 
@@ -74,6 +77,17 @@ def unustatudParool(kasutajanimi: str, uusParool: str, logPas: dict):
     """Funktsioon saadab kasutajale e-kirja uue parooliga."""
     if kasutajanimi in logPas:
         logPas[kasutajanimi] = uusParool
+
+        with open("autoriseerimine.txt", "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        with open("autoriseerimine.txt", "w", encoding="utf-8") as f:
+            for line in lines:
+                user, password = line.strip().split(":")
+                if user == kasutajanimi:
+                    f.write(f"{user}:{uusParool}\n")
+                else:
+                    f.write(line)
 
         # Kirja saatmine
         try:
@@ -111,19 +125,6 @@ def unustatudParool(kasutajanimi: str, uusParool: str, logPas: dict):
 
 
 
-
-def uuendaAutoriseerimineFail(kasutajanimi, uusParool):
-    """Обновление пароля в файле autoriseerimine.txt."""
-    with open("autoriseerimine.txt", "r", encoding="utf-8") as f:
-        read_lines = f.readlines()
-
-    with open("autoriseerimine.txt", "w", encoding="utf-8") as f:
-        for line in read_lines:
-            user, password = line.strip().split(":")
-            if user == kasutajanimi:
-                f.write(f"{user}:{uusParool}\n")
-            else:
-                f.write(f"{user}:{password}\n")
 
 
 

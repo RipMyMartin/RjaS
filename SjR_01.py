@@ -28,7 +28,6 @@ while True:
             print("Genereeritud parool:", parool)
         registreeriKasutaja(kasutajanimi, parool, users, passwords)
         kasutaja_registreeritud = True
-        kirjutaFailisse("autoriseerimine.txt", [f"{users[i]}:{passwords[i]}" for i in range(len(users))])
 
     elif valik == "1":
         kasutajanimi = input("Sisestage kasutajanimi: ")
@@ -42,6 +41,6 @@ while True:
         muudaParool(kasutajanimi, vanaParool, uusParool)
 
     elif valik == "3":
-        kasutajanimi = input("Sisestage kasutajanimi, для которale soovite parooli taastada: ")
+        kasutajanimi = input("Sisestage kasutajanimi, kellele soovite parooli taastada: ")
         uusParool = input("Sisestage uus parool: ")
         unustatudParool(kasutajanimi, uusParool, logPas)
